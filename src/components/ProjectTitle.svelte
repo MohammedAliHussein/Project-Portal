@@ -14,7 +14,7 @@
     function handleKeydown(event) {
         if(editing && event.key === "Enter") {
             //send to server
-            title = titleEdit;
+            titleEdit.length > 0 ? title = titleEdit : title = title;
             editing = false;
         }
     }
@@ -22,14 +22,13 @@
     onMount(() => {
         ready = true;
     });
-
 </script>
 
 {#if ready}
     {#if !editing}
         <h3 on:click={handleTitleChange}>{title}</h3>
     {:else}
-        <input class={`${title}-input`} placeholder={title} bind:value={titleEdit}>
+        <input placeholder={title} bind:value={titleEdit}>
     {/if}
 {/if}
 
@@ -41,6 +40,7 @@
         font-weight: 700;
         margin: 10px;
         background: none;
+        cursor: pointer;
     }
 
     input {
@@ -51,6 +51,5 @@
         text-align: center;
         border: none;
         outline: none;
-        outline: 1px solid white;
     }
 </style>
