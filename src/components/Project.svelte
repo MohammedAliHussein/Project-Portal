@@ -24,6 +24,7 @@
 
     onMount(() => {
         ready = true;
+        console.log(link);
     });
 </script>
 
@@ -33,10 +34,14 @@
         <ProjectTitle title={title}/>
         <div class="links">
             {#if github !== ""}
-                <i class="fa-brands fa-github fa-lg" on:click={window.open(github)}></i>
+                <i class="fa-brands fa-github fa-lg"></i>
+            {:else}
+                <i id="hidden" class="fa-brands fa-github fa-lg"></i>
             {/if}
             {#if link !== ""}
-                <i class="fa-solid fa-up-right-from-square fa-lg" on:click={window.open(link)}></i>    
+                <i class="fa-solid fa-up-right-from-square fa-lg"></i>    
+            {:else}
+                <i id="hidden" class="fa-solid fa-up-right-from-square fa-lg"></i>  
             {/if}
         </div>
         <ProjectDescription description={description}/>
@@ -56,6 +61,7 @@
         margin: 20px;
         outline: 1px solid rgba(72, 72, 72, 0.1);
         position: relative;
+       
     }
 
     @keyframes slideIn {
@@ -87,5 +93,9 @@
         top: 0;
         right: 0;
         margin: 10px;
+    }
+
+    #hidden {
+        color: rgba(255, 255, 255, 0.4);
     }
 </style>

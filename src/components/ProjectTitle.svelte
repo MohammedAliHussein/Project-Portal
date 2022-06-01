@@ -1,5 +1,6 @@
 <script>
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
+    import axios from "axios";
 
     export let title = "";
 
@@ -11,16 +12,25 @@
         editing = true;
     }
 
-    function handleKeydown(event) {
+    async function handleKeydown(event) {
         if(editing && event.key === "Enter") {
-            //send to server
-            titleEdit.length > 0 ? title = titleEdit : title = title;
+            if(titleEdit.length > 0) {
+                // axios.post()
+                //send to server
+                title = titleEdit;
+            } else {
+                title = title;
+            }
             editing = false;
         }
     }
 
     onMount(() => {
         ready = true;
+    });
+
+    onDestroy(() => {
+        editing = false;
     });
 </script>
 

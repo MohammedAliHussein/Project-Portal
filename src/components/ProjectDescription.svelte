@@ -1,10 +1,31 @@
 <script>
+    import { onMount } from "svelte";
+
     export let description = "";
+
+    $: descriptionEdit = description;
+
+    let ready = false;
+    let editing = false;
+
+    function handleDescriptionChange() {
+        editing = true;
+    }
+
+    onMount(() => {
+        ready = true;
+    });
 </script>
 
-<div class="description">
-    <h3>{description}</h3>
-</div>
+{#if ready}
+    <div class="description">
+        {#if !editing}
+            <h3 on:click={handleDescriptionChange}>{description}</h3>
+        {:else}
+            <textarea class="input" cols="50" rows="5" bind:value={descriptionEdit}></textarea>
+        {/if}
+    </div>
+{/if}
 
 <style>
     .description {
@@ -19,5 +40,16 @@
         color: rgb(210, 210, 210);
         line-height: 20px;
         background: none;
+    }
+
+    .input {
+        font-size: 12px;
+        font-weight: 300;
+        color: rgb(210, 210, 210);
+        line-height: 20px;
+        text-align: center;
+        border: none;
+        outline: none;
+        height: fit-content;
     }
 </style>
