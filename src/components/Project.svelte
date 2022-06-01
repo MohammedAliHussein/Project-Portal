@@ -14,12 +14,70 @@
     export let index = 0;
 
     let ready = false;
+    let linkEditing = false;
+    let githubEditing = false;
+    let editedGithub = github;
+    let editedLink = link;
     let dispatcher = createEventDispatcher();
+
+    function handleLinkChange() {
+        if(githubEditing) {
+            githubEditing = false;
+        }
+        linkEditing = true;
+    }
+
+    function handleGithubChange() {
+        if(linkEditing) {
+            linkEditing = false;
+        }
+        githubEditing = true;
+    }
 
     function handleDelete() {
         dispatcher("deleteProject", {
             name: title
         });
+    }
+
+    function handleKeyDown(event) {
+        if(event.key === "Escape") {
+            resetGithubEdit();
+            resetLinkEdit();
+        } else {
+            handleGithubLinkConfirm(event.key);
+            handleLinkConfirm(event.key);
+        }
+    }
+
+    function handleGithubLinkConfirm(key) {
+        if(githubEditing && key === "Enter") {
+            if(editedGithub.length > 0) {
+                //send to server;
+                github = editedGithub;
+            } 
+            githubEditing = false;
+        }
+    }
+
+    function handleLinkConfirm(key) {
+        if(linkEditing && key === "Enter") {
+            if(editedLink.length > 0) {
+                //send to server;
+                link = editedLink;
+            } 
+            linkEditing = false;
+        }
+    }
+
+    function resetGithubEdit() {
+        githubEditing = false;
+        editedGithub = github;
+    }
+
+    function resetLinkEdit() {
+        linkEditing = false;
+        editedLink = link;
     }
 
     onMount(() => {
@@ -29,25 +87,43 @@
 </script>
 
 {#if ready}
-    <div class="project" in:fly={{duration: 800, y: -20, delay: (index * 300) + 300}}>
+    <div class="project" in:fly={{duration: 500, y: -20, delay: (index * 300) + 300}} out:fly={{duration: 300, opacity: 0}} >
         <i id="delete" class="fa-solid fa-xmark" on:click={handleDelete}></i>
         <ProjectTitle title={title}/>
         <div class="links">
-            {#if github !== ""}
-                <i class="fa-brands fa-github fa-lg"></i>
+            {#if github.length > 0}
+                {#if !githubEditing}
+                    <i class="fa-brands fa-github fa-lg" on:click={handleGithubChange}></i>
+                {:else}
+                    <input type="text" placeholder={github} bind:value={editedGithub}>
+                {/if}
             {:else}
-                <i id="hidden" class="fa-brands fa-github fa-lg"></i>
+                {#if !githubEditing}
+                    <i id="hidden" class="fa-brands fa-github fa-lg" on:click={handleGithubChange}></i>
+                {:else}
+                    <input type="text" placeholder={"Github link"} bind:value={editedGithub}>
+                {/if}
             {/if}
-            {#if link !== ""}
-                <i class="fa-solid fa-up-right-from-square fa-lg"></i>    
+            {#if link.length > 0}
+                {#if !linkEditing}
+                    <i class="fa-solid fa-up-right-from-square fa-lg" on:click={handleLinkChange}></i>    
+                {:else}
+                    <input type="text" placeholder={link} bind:value={editedLink}>
+                {/if}
             {:else}
-                <i id="hidden" class="fa-solid fa-up-right-from-square fa-lg"></i>  
+                {#if !linkEditing}
+                    <i id="hidden" class="fa-solid fa-up-right-from-square fa-lg" on:click={handleLinkChange}></i>  
+                {:else}
+                    <input type="text" placeholder={"Link"} bind:value={editedLink}>
+                {/if}
             {/if}
         </div>
         <ProjectDescription description={description}/>
         <ProjectTechnologies technologies={technologies}/>
     </div>
 {/if}
+
+<svelte:window on:keydown={handleKeyDown}/>
 
 <style>
     .project {
@@ -77,7 +153,7 @@
 
     .links {
         height: fit-content;
-        width: 30%;
+        width: 100%;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
@@ -97,5 +173,14 @@
 
     #hidden {
         color: rgba(255, 255, 255, 0.4);
+    }
+
+    input {
+        font-size: 12px;
+        font-weight: 400;
+        text-align: center;
+        border: none;
+        outline: none;
+        margin: 0;
     }
 </style>

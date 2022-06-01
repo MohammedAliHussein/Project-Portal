@@ -13,15 +13,20 @@
     }
 
     async function handleKeydown(event) {
-        if(editing && event.key === "Enter") {
-            if(titleEdit.length > 0) {
-                // axios.post()
-                //send to server
-                title = titleEdit;
-            } else {
-                title = title;
-            }
+        if(event.key === "Escape") {
             editing = false;
+            titleEdit = title;
+        } else {
+            if(editing && event.key === "Enter") {
+                if(titleEdit.length > 0) {
+                    // axios.post()
+                    //send to server
+                    title = titleEdit;
+                } else {
+                    title = title;
+                }
+                editing = false;
+            }
         }
     }
 
