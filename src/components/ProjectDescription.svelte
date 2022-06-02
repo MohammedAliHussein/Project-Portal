@@ -35,7 +35,7 @@
         {#if !editing}
             <h3 on:click={handleDescriptionChange}>{description}</h3>
         {:else}
-            <textarea class="input" cols="50" rows="5" bind:value={descriptionEdit}></textarea>
+            <textarea class="input" cols="50" rows="4" bind:value={descriptionEdit}></textarea>
         {/if}
     </div>
 {/if}

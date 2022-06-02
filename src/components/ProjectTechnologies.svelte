@@ -4,10 +4,24 @@
     export let technologies = [];
 
     let ready = false;
-    let inputVisibility = "display: none";
+    let editing = false;
+    let editedTechnologies = technologies;
 
     function handleChangeTechnology() {
-        inputVisibility = "";
+        editing = true;
+    }
+
+    function handleKeyDown(event) {
+        if(event.key === "Escape") {
+            editedTechnologies = technologies;
+            editing = false;
+        } else {
+            if(event.key === "Enter" && editing) {
+                //send to server
+                technologies = editedTechnologies.split(",");
+                editing = false;
+            }
+        }
     }
 
     onMount(() => {
@@ -17,12 +31,17 @@
 
 {#if ready}
     <div class="technologies">
-        {#each technologies as technology}
-            <h4 on:click={handleChangeTechnology}>{technology}</h4>
-            <input class={`${technology}-input`} style={inputVisibility} type="text" placeholder={technology}>
-        {/each}
+        {#if !editing}
+            {#each technologies as technology}
+                <h4 on:click={handleChangeTechnology}>{technology}</h4>
+            {/each}
+        {:else}
+            <textarea class="input" name="" cols="30" rows="1" bind:value={editedTechnologies} placeholder={technologies}></textarea>
+        {/if}
     </div>
 {/if}
+
+<svelte:window on:keydown={handleKeyDown}/>
 
 <style>
     .technologies {
@@ -44,11 +63,14 @@
         margin-right: 10px;
     }
 
-    .visible-input {
-        z-index: 100;
-    }
-
-    .hidden-input {
-        display: none;
+    .input {
+        font-size: 12px;
+        font-weight: 300;
+        color: rgb(210, 210, 210);
+        line-height: 20px;
+        text-align: center;
+        border: none;
+        outline: none;
+        height: fit-content;
     }
 </style>
