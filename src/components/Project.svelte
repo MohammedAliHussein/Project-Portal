@@ -11,6 +11,7 @@
     export let technologies = [];
     export let github = "";
     export let link = "";
+    export let inProgress = false;
     export let index = 0;
 
     let ready = false;
@@ -80,6 +81,11 @@
         editedLink = link;
     }
 
+    function setInProgress() {
+        //send to server
+        inProgress = !inProgress;
+    }
+
     onMount(() => {
         ready = true;
         console.log(link);
@@ -116,6 +122,11 @@
                 {:else}
                     <input type="text" placeholder={"Link"} bind:value={editedLink}>
                 {/if}
+            {/if}
+            {#if inProgress}
+                <i class="fa-solid fa-hammer fa-fade" on:click={setInProgress}></i>
+            {:else}
+                <i class="fa-solid fa-hammer" on:click={setInProgress}></i>
             {/if}
         </div>
         <ProjectDescription description={description}/>
