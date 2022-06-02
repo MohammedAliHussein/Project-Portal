@@ -53,20 +53,16 @@
 
     function handleGithubLinkConfirm(key) {
         if(githubEditing && key === "Enter") {
-            if(editedGithub.length > 0) {
-                //send to server;
-                github = editedGithub;
-            } 
+            //send to server;
+            github = editedGithub;
             githubEditing = false;
         }
     }
 
     function handleLinkConfirm(key) {
         if(linkEditing && key === "Enter") {
-            if(editedLink.length > 0) {
-                //send to server;
-                link = editedLink;
-            } 
+            //send to server;
+            link = editedLink;
             linkEditing = false;
         }
     }
@@ -126,7 +122,7 @@
             {#if inProgress}
                 <i class="fa-solid fa-hammer fa-fade" on:click={setInProgress}></i>
             {:else}
-                <i class="fa-solid fa-hammer" on:click={setInProgress}></i>
+                <i class="fa-solid fa-hammer"  style="opacity: 0.5;" on:click={setInProgress}></i>
             {/if}
         </div>
         <ProjectDescription description={description}/>

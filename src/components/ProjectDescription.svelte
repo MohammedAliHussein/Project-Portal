@@ -8,6 +8,19 @@
     let ready = false;
     let editing = false;
 
+    function handleKeyDown(event) {
+        if(event.key === "Escape") {
+            descriptionEdit = description;
+            editing = false
+        } else {
+            if(event.key === "Enter") {
+                descriptionEdit.length === 0 ? description = "Description" : description = descriptionEdit;
+                editing = false;
+                //send to server
+            }
+        }
+    }
+
     function handleDescriptionChange() {
         editing = true;
     }
@@ -26,6 +39,8 @@
         {/if}
     </div>
 {/if}
+
+<svelte:window on:keydown={handleKeyDown}/>
 
 <style>
     .description {
