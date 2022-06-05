@@ -5,6 +5,7 @@
 
     import { fly } from "svelte/transition";
     import { onMount, createEventDispatcher } from "svelte";
+    import axios from "axios";
 
     export let title = "title";
     export let description = "description";
@@ -35,10 +36,12 @@
         githubEditing = true;
     }
 
-    function handleDelete() {
+    async function handleDelete() {
         dispatcher("deleteProject", {
             name: title
         });
+
+        const response = await axios.put("http://localhost:3000/api/v1/projects/deleteProject", {title});
     }
 
     function handleKeyDown(event) {
@@ -51,18 +54,24 @@
         }
     }
 
-    function handleGithubLinkConfirm(key) {
+    async function handleGithubLinkConfirm(key) {
         if(githubEditing && key === "Enter") {
-            //send to server;
             github = editedGithub;
+            const response = await axios.put("http://localhost:3000/api/v1/projects/updateGithub", {
+                title,
+                github
+            });
             githubEditing = false;
         }
     }
 
-    function handleLinkConfirm(key) {
+    async function handleLinkConfirm(key) {
         if(linkEditing && key === "Enter") {
-            //send to server;
             link = editedLink;
+            const response = axios.put("http://localhost:3000/api/v1/projects/updateLink", {
+                title,
+                link
+            });
             linkEditing = false;
         }
     }
@@ -77,14 +86,16 @@
         editedLink = link;
     }
 
-    function setInProgress() {
-        //send to server
+    async function setInProgress() {
         inProgress = !inProgress;
+        const response = await axios.put("http://localhost:3000/api/v1/projects/updateProgress", {
+            title,
+            progress: inProgress
+        });
     }
 
     onMount(() => {
         ready = true;
-        console.log(link);
     });
 </script>
 
@@ -125,8 +136,8 @@
                 <i class="fa-solid fa-hammer"  style="opacity: 0.5;" on:click={setInProgress}></i>
             {/if}
         </div>
-        <ProjectDescription description={description}/>
-        <ProjectTechnologies technologies={technologies}/>
+        <ProjectDescription title={title} description={description}/>
+        <ProjectTechnologies title={title} technologies={technologies}/>
     </div>
 {/if}
 

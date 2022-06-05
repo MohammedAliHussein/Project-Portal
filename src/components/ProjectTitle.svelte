@@ -19,8 +19,11 @@
         } else {
             if(editing && event.key === "Enter") {
                 if(titleEdit.length > 0) {
-                    // axios.post()
-                    //send to server
+                    const response = await axios.put("http://localhost:3000/api/v1/projects/updateTitle", { 
+                        title,
+                        newTitle: titleEdit, 
+                    });
+                    //handleErrorResponse
                     title = titleEdit;
                 } else {
                     title = title;

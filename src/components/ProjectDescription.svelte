@@ -1,7 +1,9 @@
 <script>
     import { onMount } from "svelte";
+    import axios from "axios";
 
     export let description = "";
+    export let title = "";
 
     $: descriptionEdit = description;
 
@@ -14,9 +16,16 @@
             editing = false
         } else {
             if(event.key === "Enter") {
-                descriptionEdit.length === 0 ? description = "Description" : description = descriptionEdit;
+                if(descriptionEdit.length > 0) {
+                    description = descriptionEdit;
+                    axios.put("http://localhost:3000/api/v1/projects/updateDescription", {
+                        title,
+                        description
+                    })
+                } else {
+                    description = "Description";
+                }
                 editing = false;
-                //send to server
             }
         }
     }

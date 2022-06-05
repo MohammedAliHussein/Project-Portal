@@ -1,7 +1,9 @@
 <script>
     import { onMount } from "svelte";
+    import axios from "axios";
 
     export let technologies = [];
+    export let title = "";
 
     let ready = false;
     let editing = false;
@@ -17,8 +19,11 @@
             editing = false;
         } else {
             if(event.key === "Enter" && editing) {
-                //send to server
                 technologies = editedTechnologies.split(",");
+                axios.put("http://localhost:3000/api/v1/projects/updateTechnologies", {
+                    title,
+                    technologies
+                });
                 editing = false;
             }
         }

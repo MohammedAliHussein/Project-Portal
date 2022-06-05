@@ -9,23 +9,26 @@
     let ready = false;
     let projectData = [];
 
-    function handleDelete(event) {
+    async function handleDelete(event) {
         projectData = projectData.filter((project) => {
             return project.title !== event.detail.name
         });      
     }
 
-    function handleNewProject(event) {
-        projectData.push({
-            title: "Title",
+    async function handleNewProject(event) {
+        const project = {
+            title: `Title-${projectData.length}`,
             description:"Description",
             technologies: ['Technologies'],
             github: "",
             link: "",
             hidden: false,
-        });
+        }
+        projectData.push(project);
 
         projectData = projectData;
+
+        const response = await axios.post("http://localhost:3000/api/v1/projects", project);
     }
 
 	onMount(async () => {
