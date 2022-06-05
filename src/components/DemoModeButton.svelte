@@ -5,8 +5,8 @@
 	let dispatcher = createEventDispatcher();
 
 
-	function signalSubmit() {
-		dispatcher("signin");
+	function signalDemoMode() {
+		dispatcher("demo");
 	}
 
 	onMount(() => {
@@ -15,7 +15,7 @@
 </script>
 
 {#if ready}
-	<button on:click={signalSubmit}>Submit</button>
+	<button on:click={signalDemoMode}>Use Demo Mode</button>
 {/if}
 
 <style>
@@ -28,6 +28,8 @@
 		margin-top: 15px;
 		transition: 0.2s cubic-bezier(0, 0.55, 0.45, 1);
 		font-size: 12px;
+        position: absolute;
+        bottom: 20px;
 	}
 
 	button:hover {

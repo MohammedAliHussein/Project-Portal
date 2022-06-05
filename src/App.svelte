@@ -29,6 +29,3 @@
 		{/if}
 	{/if}
 </main>
-
-<style>
-</style>
