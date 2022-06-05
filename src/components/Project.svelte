@@ -58,9 +58,10 @@
         if(githubEditing && key === "Enter") {
             github = editedGithub;
             const response = await axios.put("http://localhost:3000/api/v1/projects/updateGithub", {
-                title,
-                github
+                title: title,
+                github: github
             });
+
             githubEditing = false;
         }
     }
@@ -68,7 +69,7 @@
     async function handleLinkConfirm(key) {
         if(linkEditing && key === "Enter") {
             link = editedLink;
-            const response = axios.put("http://localhost:3000/api/v1/projects/updateLink", {
+            const response = await axios.put("http://localhost:3000/api/v1/projects/updateLink", {
                 title,
                 link
             });
@@ -76,12 +77,12 @@
         }
     }
 
-    function resetGithubEdit() {
+    async function resetGithubEdit() {
         githubEditing = false;
         editedGithub = github;
     }
 
-    function resetLinkEdit() {
+    async function resetLinkEdit() {
         linkEditing = false;
         editedLink = link;
     }
