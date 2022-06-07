@@ -23,8 +23,13 @@
                 technologies = editedTechnologies.split(",");
                 if(authToken !== "demo") {
                     const response = await axios.put("http://localhost:3000/api/v1/projects/updateTechnologies", {
-                        title,
-                        technologies
+                        data: {
+                            title,
+                            technologies
+                        },
+                        headers: {
+                            "authToken": localStorage.getItem("authToken")
+                        }
                     });
                 }
                 editing = false;

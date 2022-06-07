@@ -43,7 +43,12 @@
         });
 
         if(authToken !== "demo") {
-            const response = await axios.put("http://localhost:3000/api/v1/projects/deleteProject", {title});
+            const response = await axios.put("http://localhost:3000/api/v1/projects/deleteProject", {
+                data: title, 
+                headers: {
+                    "authToken": localStorage.getItem("authToken")
+                }
+            });
         }
     }
 
@@ -62,8 +67,13 @@
             github = editedGithub;
             if(authToken !== "demo") {
                 const response = await axios.put("http://localhost:3000/api/v1/projects/updateGithub", {
-                    title: title,
-                    github: github
+                    data: {
+                        title: title,
+                        github: github
+                    },
+                    headers: {
+                        "authToken": localStorage.getItem("authToken")
+                    }                    
                 });
             }
 
@@ -76,8 +86,13 @@
             link = editedLink;
             if(authToken !== "demo") {
                 const response = await axios.put("http://localhost:3000/api/v1/projects/updateLink", {
-                    title,
-                    link
+                    data: {
+                        title,
+                        link
+                    },
+                    headers: {
+                        "authToken": localStorage.getItem("authToken")
+                    }                    
                 });
             }
             linkEditing = false;
@@ -98,8 +113,13 @@
         inProgress = !inProgress;
         if(authToken !== "demo") {
             const response = await axios.put("http://localhost:3000/api/v1/projects/updateProgress", {
-                title,
-                progress: inProgress
+                data: {
+                    title,
+                    progress: inProgress
+                },
+                headers: {
+                    "authToken": localStorage.getItem("authToken")
+                }
             });
         }
     }

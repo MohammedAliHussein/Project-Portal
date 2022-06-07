@@ -22,8 +22,13 @@
                 if(titleEdit.length > 0) {
                     if(authToken !== "demo") {
                         const response = await axios.put("http://localhost:3000/api/v1/projects/updateTitle", { 
-                            title,
-                            newTitle: titleEdit, 
+                            data: {
+                                title,
+                                newTitle: titleEdit, 
+                            },
+                            headers: {
+                                "authToken": localStorage.getItem("authToken")
+                            }
                         });
                         //handleErrorResponse
                     }

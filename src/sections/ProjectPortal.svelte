@@ -31,7 +31,12 @@
         projectData = projectData;
 
         if(authToken !== "demo") {
-            const response = await axios.post("http://localhost:3000/api/v1/projects", project);
+            const response = await axios.post("http://localhost:3000/api/v1/projects", {
+                data:project,
+                headers: {
+                    "authToken": localStorage.getItem("authToken")
+                }
+            });
         }
     }
 

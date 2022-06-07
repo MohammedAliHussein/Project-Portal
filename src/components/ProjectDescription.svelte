@@ -21,8 +21,13 @@
                     description = descriptionEdit;
                     if(authToken !== "demo") {
                         axios.put("http://localhost:3000/api/v1/projects/updateDescription", {
-                            title,
-                            description
+                            data: {
+                                title,
+                                description
+                            },
+                            headers: {
+                                "authToken": localStorage.getItem("authToken")
+                            }
                         })
                     }
                 } else {
