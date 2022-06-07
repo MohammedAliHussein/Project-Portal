@@ -20,10 +20,12 @@
             status: 200
         }
 
-        auth.status === 200 ? dispatcher("login", { jwt: "dummy" }) : ''
+        auth.status === 200 ? dispatcher("login", { auth: "dummy" }) : ''
     }
 
-    function handleDemoMode(){}
+    function handleDemoMode() {
+        dispatcher("login", { auth: "demo" });
+    }
 
     onMount(() => {
         ready = true;

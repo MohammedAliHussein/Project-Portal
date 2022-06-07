@@ -4,6 +4,7 @@
 
     export let description = "";
     export let title = "";
+    export let authToken = "demo";
 
     $: descriptionEdit = description;
 
@@ -15,7 +16,7 @@
             descriptionEdit = description;
             editing = false
         } else {
-            if(event.key === "Enter") {
+            if(event.key === "Enter" && editing) {
                 if(descriptionEdit.length > 0) {
                     description = descriptionEdit;
                     axios.put("http://localhost:3000/api/v1/projects/updateDescription", {

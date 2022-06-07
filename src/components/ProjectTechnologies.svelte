@@ -4,6 +4,7 @@
 
     export let technologies = [];
     export let title = "";
+    export let authToken = "demo";
 
     let ready = false;
     let editing = false;

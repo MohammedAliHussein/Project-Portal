@@ -14,6 +14,7 @@
     export let link = "";
     export let inProgress = false;
     export let index = 0;
+    export let authToken = "demo";
 
     let ready = false;
     let linkEditing = false;
@@ -41,7 +42,9 @@
             name: title
         });
 
-        const response = await axios.put("http://localhost:3000/api/v1/projects/deleteProject", {title});
+        if(authToken !== "demo") {
+            const response = await axios.put("http://localhost:3000/api/v1/projects/deleteProject", {title});
+        }
     }
 
     function handleKeyDown(event) {
@@ -57,10 +60,12 @@
     async function handleGithubLinkConfirm(key) {
         if(githubEditing && key === "Enter") {
             github = editedGithub;
-            const response = await axios.put("http://localhost:3000/api/v1/projects/updateGithub", {
-                title: title,
-                github: github
-            });
+            if(authToken !== "demo") {
+                const response = await axios.put("http://localhost:3000/api/v1/projects/updateGithub", {
+                    title: title,
+                    github: github
+                });
+            }
 
             githubEditing = false;
         }
@@ -69,10 +74,12 @@
     async function handleLinkConfirm(key) {
         if(linkEditing && key === "Enter") {
             link = editedLink;
-            const response = await axios.put("http://localhost:3000/api/v1/projects/updateLink", {
-                title,
-                link
-            });
+            if(authToken !== "demo") {
+                const response = await axios.put("http://localhost:3000/api/v1/projects/updateLink", {
+                    title,
+                    link
+                });
+            }
             linkEditing = false;
         }
     }
@@ -89,10 +96,12 @@
 
     async function setInProgress() {
         inProgress = !inProgress;
-        const response = await axios.put("http://localhost:3000/api/v1/projects/updateProgress", {
-            title,
-            progress: inProgress
-        });
+        if(authToken !== "demo") {
+            const response = await axios.put("http://localhost:3000/api/v1/projects/updateProgress", {
+                title,
+                progress: inProgress
+            });
+        }
     }
 
     onMount(() => {
@@ -103,7 +112,7 @@
 {#if ready}
     <div class="project" in:fly={{duration: 500, y: -20, delay: (index * 300) + 300}} out:fly={{duration: 300, opacity: 0}} >
         <i id="delete" class="fa-solid fa-xmark" on:click={handleDelete}></i>
-        <ProjectTitle title={title}/>
+        <ProjectTitle title={title} authToken={authToken}/>
         <div class="links">
             {#if github.length > 0}
                 {#if !githubEditing}
@@ -137,8 +146,8 @@
                 <i class="fa-solid fa-hammer"  style="opacity: 0.5;" on:click={setInProgress}></i>
             {/if}
         </div>
-        <ProjectDescription title={title} description={description}/>
-        <ProjectTechnologies title={title} technologies={technologies}/>
+        <ProjectDescription title={title} description={description} authToken={authToken}/>
+        <ProjectTechnologies title={title} technologies={technologies} authToken={authToken}/>
     </div>
 {/if}
 

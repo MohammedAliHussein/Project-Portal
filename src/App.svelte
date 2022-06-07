@@ -10,7 +10,7 @@
 	let ready = false;
 
 	function handleLogin(event) {
-		authToken = event.detail.jwt;
+		authToken = event.detail.auth;
 		authenticated = true;
 	}
 

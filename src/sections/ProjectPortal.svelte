@@ -4,7 +4,7 @@
     import NewProject from "../components/NewProject.svelte";
     import axios from "axios"
 
-    export let authToken = null;
+    export let authToken = "demo";
 
     let ready = false;
     let projectData = [];
@@ -43,11 +43,14 @@
 
 {#if ready}
     <div class="portal">
+        {#if authToken === "demo"}
+            <h5>You are in demo mode. No changes will be submitted.</h5>
+        {/if}
         <h1>Project Portal</h1>
         <NewProject on:newProject={handleNewProject}/>
         <div class="projects-section">
             {#each projectData as project}
-                <Project {...project} on:deleteProject={handleDelete}/> 
+                <Project {...project} on:deleteProject={handleDelete} authToken={authToken}/> 
             {/each}
         </div>
     </div>
@@ -71,5 +74,12 @@
         width: 100%;
         flex-wrap: wrap;
         overflow-y: visible;
+    }
+
+    h5 {
+        font-size: 11px;
+        color: rgba(255, 0, 0, 0.709);
+        font-weight: 300;
+        margin-bottom: 10px;
     }
 </style>

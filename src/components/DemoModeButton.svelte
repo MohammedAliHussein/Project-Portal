@@ -4,7 +4,6 @@
 	let ready = false;
 	let dispatcher = createEventDispatcher();
 
-
 	function signalDemoMode() {
 		dispatcher("demo");
 	}
