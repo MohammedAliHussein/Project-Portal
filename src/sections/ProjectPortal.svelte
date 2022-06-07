@@ -1,13 +1,15 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, createEventDispatcher } from "svelte";
     import Project from "../components/Project.svelte";
     import NewProject from "../components/NewProject.svelte";
+    import LogoutButton from "../components/LogoutButton.svelte";
     import axios from "axios"
 
     export let authToken = "demo";
 
     let ready = false;
     let projectData = [];
+    let dispatcher = createEventDispatcher();
 
     async function handleDelete(event) {
         projectData = projectData.filter((project) => {
@@ -33,6 +35,10 @@
         }
     }
 
+    function handleLogout() {
+        dispatcher("logout");
+    }
+
 	onMount(async () => {
 		const bulkData = (await axios.get("http://localhost:3000/api/v1/projects")).data;
 		const keys = Object.keys(bulkData);
@@ -48,6 +54,7 @@
         {#if authToken === "demo"}
             <h5>You are in demo mode. No changes will be submitted.</h5>
         {/if}
+        <LogoutButton on:logout={handleLogout}/>
         <h1>Project Portal</h1>
         <NewProject on:newProject={handleNewProject}/>
         <div class="projects-section">

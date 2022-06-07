@@ -19,10 +19,12 @@
             if(event.key === "Enter" && editing) {
                 if(descriptionEdit.length > 0) {
                     description = descriptionEdit;
-                    axios.put("http://localhost:3000/api/v1/projects/updateDescription", {
-                        title,
-                        description
-                    })
+                    if(authToken !== "demo") {
+                        axios.put("http://localhost:3000/api/v1/projects/updateDescription", {
+                            title,
+                            description
+                        })
+                    }
                 } else {
                     description = "Description";
                 }

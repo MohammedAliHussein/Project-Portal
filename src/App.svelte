@@ -9,12 +9,20 @@
 
 	let ready = false;
 
-	function handleLogin(event) {
-		authToken = event.detail.auth;
+	async function handleLogin(event) {
+		authToken = event.detail.authToken;
 		authenticated = true;
 	}
 
+	function handleLogout() {
+		authenticated = false;
+	}
+
 	onMount(() => {
+		if(localStorage.getItem("authToken")) {
+			authToken = localStorage.getItem("authToken");
+			authenticated = true;
+		}
 		ready = true;
 	});
 
@@ -23,7 +31,7 @@
 <main>
 	{#if ready}
 		{#if authenticated}
-			<ProjectPortal authToken={authToken}/>
+			<ProjectPortal authToken={authToken} on:logout={handleLogout}/>
 		{:else}
 			<ProjectPortalSignin on:login={handleLogin}/>
 		{/if}

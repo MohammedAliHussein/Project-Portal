@@ -21,10 +21,12 @@
         } else {
             if(event.key === "Enter" && editing) {
                 technologies = editedTechnologies.split(",");
-                const response = await axios.put("http://localhost:3000/api/v1/projects/updateTechnologies", {
-                    title,
-                    technologies
-                });
+                if(authToken !== "demo") {
+                    const response = await axios.put("http://localhost:3000/api/v1/projects/updateTechnologies", {
+                        title,
+                        technologies
+                    });
+                }
                 editing = false;
             }
         }
