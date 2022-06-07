@@ -28,7 +28,9 @@
 
         projectData = projectData;
 
-        const response = await axios.post("http://localhost:3000/api/v1/projects", project);
+        if(authToken !== "demo") {
+            const response = await axios.post("http://localhost:3000/api/v1/projects", project);
+        }
     }
 
 	onMount(async () => {
@@ -78,7 +80,7 @@
 
     h5 {
         font-size: 11px;
-        color: rgba(255, 0, 0, 0.709);
+        color: rgba(255, 0, 0, 0.9);
         font-weight: 300;
         margin-bottom: 10px;
     }
