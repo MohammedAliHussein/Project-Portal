@@ -43,7 +43,7 @@
         });
 
         if(authToken !== "demo") {
-            const response = await axios.put("http://localhost:3000/api/v1/projects/deleteProject", {
+            const response = await axios.put("https://localhost:443/api/v1/projects/deleteProject", {
                 data: title, 
                 headers: {
                     "authToken": localStorage.getItem("authToken")
@@ -66,7 +66,7 @@
         if(githubEditing && key === "Enter") {
             github = editedGithub;
             if(authToken !== "demo") {
-                const response = await axios.put("http://localhost:3000/api/v1/projects/updateGithub", {
+                const response = await axios.put("https://localhost:443/api/v1/projects/updateGithub", {
                     data: {
                         title: title,
                         github: github
@@ -85,7 +85,7 @@
         if(linkEditing && key === "Enter") {
             link = editedLink;
             if(authToken !== "demo") {
-                const response = await axios.put("http://localhost:3000/api/v1/projects/updateLink", {
+                const response = await axios.put("https://localhost:443/api/v1/projects/updateLink", {
                     data: {
                         title,
                         link
@@ -112,7 +112,7 @@
     async function setInProgress() {
         inProgress = !inProgress;
         if(authToken !== "demo") {
-            const response = await axios.put("http://localhost:3000/api/v1/projects/updateProgress", {
+            const response = await axios.put("https://localhost:443/api/v1/projects/updateProgress", {
                 data: {
                     title,
                     progress: inProgress

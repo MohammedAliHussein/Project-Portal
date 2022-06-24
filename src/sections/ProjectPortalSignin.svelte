@@ -20,7 +20,7 @@
         const username = document.querySelector(".email").value;
         const password = document.querySelector(".password").value;
 
-        const auth = await axios.post("http://localhost:3000/portal/login", { 
+        const auth = await axios.post("https://localhost:443/portal/login", { 
             username: username ? username : "", 
             password: password ? password : "" 
         }).catch((error) => {

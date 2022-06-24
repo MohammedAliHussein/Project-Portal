@@ -31,7 +31,7 @@
         projectData = projectData;
 
         if(authToken !== "demo") {
-            const response = await axios.post("http://localhost:3000/api/v1/projects", {
+            const response = await axios.post("https://localhost:443/api/v1/projects", {
                 data:project,
                 headers: {
                     "authToken": localStorage.getItem("authToken")
@@ -45,7 +45,7 @@
     }
 
 	onMount(async () => {
-		const bulkData = (await axios.get("http://localhost:3000/api/v1/projects")).data;
+		const bulkData = (await axios.get("https://localhost:443/api/v1/projects")).data;
 		const keys = Object.keys(bulkData);
 		keys.forEach((key) => {
 			projectData.push(bulkData[key].project);

@@ -20,7 +20,7 @@
                 if(descriptionEdit.length > 0) {
                     description = descriptionEdit;
                     if(authToken !== "demo") {
-                        axios.put("http://localhost:3000/api/v1/projects/updateDescription", {
+                        axios.put("https://localhost:443/api/v1/projects/updateDescription", {
                             data: {
                                 title,
                                 description

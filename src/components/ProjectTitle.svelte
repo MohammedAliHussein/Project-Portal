@@ -21,7 +21,7 @@
             if(editing && event.key === "Enter") {
                 if(titleEdit.length > 0) {
                     if(authToken !== "demo") {
-                        const response = await axios.put("http://localhost:3000/api/v1/projects/updateTitle", { 
+                        const response = await axios.put("https://localhost:443/api/v1/projects/updateTitle", { 
                             data: {
                                 title,
                                 newTitle: titleEdit, 

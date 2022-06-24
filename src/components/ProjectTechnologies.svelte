@@ -22,7 +22,7 @@
             if(event.key === "Enter" && editing) {
                 technologies = editedTechnologies.split(",");
                 if(authToken !== "demo") {
-                    const response = await axios.put("http://localhost:3000/api/v1/projects/updateTechnologies", {
+                    const response = await axios.put("https://localhost:443/api/v1/projects/updateTechnologies", {
                         data: {
                             title,
                             technologies
